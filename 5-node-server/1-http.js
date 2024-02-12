@@ -1,4 +1,5 @@
 const http = require('http');
+const fs = require('fs');
 
 const server = http.createServer((req, res) => {
   console.log('incoming...');
@@ -7,8 +8,20 @@ const server = http.createServer((req, res) => {
   console.log(req.method);
   console.log(req.url);
 
-  res.write('Welcom!');
-  res.end();
+  const url = req.url;
+
+  res.setHeader('Content-Type', 'text/html');
+
+  if (url === '/') {
+    fs.createReadStream('./html/index.html').pipe(res);
+
+  } else if (url === '/coures') {
+    fs.createReadStream('./html/coures.html').pipe(res);
+
+  } else {
+    fs.createReadStream('./html/not-found.html').pipe(res);
+  }
+
 })
 
 server.listen(8080)
