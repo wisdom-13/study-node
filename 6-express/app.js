@@ -58,5 +58,51 @@ app.post('/post', (req, res, next) => {
   console.log(req.body);
 })
 
+// 에러 처리하기 
+app.get('/file', (req, res) => {
+  // good 👍
+  fs.readFile('/file.txt', (err, data) => {
+    if (err) {
+      res.sendStatus(404);
+    }
+  })
+})
+
+app.get('/file1', (req, res) => {
+  // bad ❌
+  // const data = fs.readFileSync('/file1.txt');
+  // res.send(data);
+
+  // good 👍
+  try {
+    const data = fs.readFileSync('/file1.txt');
+    res.send(data);
+  } catch (error) {
+    res.sendStatus(404);
+  }
+})
+
+app.get('/file2', (req, res) => {
+  // bad ❌
+  fsAsync
+    .readFile('/file2.txt')
+    .then((data) => res.send(data))
+    // good 👍
+    .catch((error) => res.sendStatus(404));
+})
+
+app.get('/file3', async function (req, res) {
+  try {
+    const data = await fsAsync.readFile('/file2.txt');
+    res.send(data)
+  } catch (error) {
+    res.sendStatus(404);
+  }
+})
+
+app.use((error, req, res, next) => {
+  console.error(error);
+  res.status(500).json({ message: 'Something went wrong' });
+})
 
 app.listen(8080);
