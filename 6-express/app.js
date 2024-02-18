@@ -42,13 +42,21 @@ app.get('/', (req, res, next) => {
   console.log('second');
 })
 
-app.use((req, res, next) => {
-  res.status(404).send('Not Found');
+// app.use((req, res, next) => {
+//   res.status(404).send('Not Found');
+// })
+
+// app.use((error, req, res, next) => {
+//   console.error(error);
+//   res.status(500).send('Error')
+// })
+
+
+// post 처리하기
+app.use(express.json());
+app.post('/post', (req, res, next) => {
+  console.log(req.body);
 })
 
-app.use((error, req, res, next) => {
-  console.error(error);
-  res.status(500).send('Error')
-})
 
 app.listen(8080);
