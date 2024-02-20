@@ -104,4 +104,23 @@ app.use((error, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong' });
 })
 
+
+//route 사용하기 
+app.route('/posts')
+  .get((req, res, next) => {
+    res.status(201).send('GET: /posts');
+  })
+  .post((req, res) => {
+    res.status(201).send('POST: /posts');
+  })
+
+app.route('/posts/:id')
+  .get((req, res, next) => {
+    res.status(201).send('GET: /posts/:id');
+  })
+  .post((req, res) => {
+    res.status(201).send('POST: /posts/:id');
+  })
+
+
 app.listen(8080);
