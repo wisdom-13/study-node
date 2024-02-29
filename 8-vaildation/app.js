@@ -11,7 +11,7 @@ app.post('/users',
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).json({ message: errors.array() })
+      return res.status(400).json({ message: errors.array() })
     }
     console.log(req.body);
     res.sendStatus(201);
@@ -22,7 +22,7 @@ app.get('/:email',
   (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      res.status(400).json({ message: errors.array() })
+      return res.status(400).json({ message: errors.array() })
     }
     res.send('SEND');
   })
