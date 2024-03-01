@@ -13,12 +13,11 @@ const validate = (req, res, next) => {
 }
 
 app.post('/users',
-  body('name').isLength({ min: 2 }).withMessage('2자 이상 입력하세요.'),
+  body('name').trim().isLength({ min: 2 }).withMessage('2자 이상 입력하세요.'),
   body('age').isInt().withMessage('숫자를 입력해주세요.'),
-  body('email').isEmail().withMessage('이메일을 입력해주세요.'),
+  body('email').isEmail().withMessage('이메일을 입력해주세요.').normalizeEmail(),
   validate,
   (req, res, next) => {
-
     console.log(req.body);
     res.sendStatus(201);
   })
